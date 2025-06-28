@@ -1,4 +1,13 @@
-# Library Management System - Microservices Architecture
+# Library System
+
+A comprehensive library management system built with microservices architecture using Spring Boot, Spring Cloud, and Docker.
+
+## Demo Videos
+
+- **Part 1 - Infrastructure Setup**: [https://www.youtube.com/watch?v=Gqf7qObCQO0](https://www.youtube.com/watch?v=Gqf7qObCQO0)
+- **Part 2 - Applications**: [https://www.youtube.com/watch?v=EsyfQkC1OQ0](https://www.youtube.com/watch?v=EsyfQkC1OQ0)
+
+## Architecture
 
 This project implements a library management system using Spring Cloud microservices architecture with the following components:
 
@@ -383,9 +392,4 @@ You can access the admin panel at [http://localhost:8088/admin/login](http://loc
 
 - Username: `superadmin`  Password: `superadmin123` (Super Admin)
 - Username: `admin`       Password: `admin123` (Admin)
-
-## Demo Videos
-
-- **Part 1 - Infrastructure Setup**: [https://www.youtube.com/watch?v=Gqf7qObCQO0](https://www.youtube.com/watch?v=Gqf7qObCQO0)
-- **Part 2 - Applications**: [https://www.youtube.com/watch?v=EsyfQkC1OQ0](https://www.youtube.com/watch?v=EsyfQkC1OQ0)
 
