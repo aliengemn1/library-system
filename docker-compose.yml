@@ -224,6 +224,33 @@ services:
       timeout: 10s
       retries: 3
 
+  # Admin Service
+  admin-service:
+    build:
+      context: .
+      dockerfile: admin-service/Dockerfile
+    container_name: library-admin-service
+    ports:
+      - "8088:8088"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/library_db
+      SPRING_DATASOURCE_USERNAME: library_user
+      SPRING_DATASOURCE_PASSWORD: library_password
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-server:8888
+    networks:
+      - library-network
+    depends_on:
+      - discovery-server
+      - config-server
+      - postgres
+    healthcheck:
+      test: ["CMD-SHELL", "netstat -an | grep :8088 | grep LISTEN || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   # API Gateway
   api-gateway:
     build:
@@ -247,6 +274,7 @@ services:
       - notification-service
       - integration-service
       - reporting-service
+      - admin-service
     healthcheck:
       test: ["CMD-SHELL", "netstat -an | grep :8080 | grep LISTEN || exit 1"]
       interval: 30s

@@ -7,13 +7,14 @@ This project implements a library management system using Spring Cloud microserv
 1. **Discovery Server (Eureka)** - Service registry and discovery
 2. **Configuration Server** - Centralized configuration management
 3. **API Gateway** - Single entry point for all client requests
-4. **Catalog Service** - MARC record and book catalog management
-5. **Patron Service** - Patron/User management
-6. **Circulation Service** - Book checkout/return management
-7. **Notification Service** - Email and notification management
-8. **Integration Service** - External system integrations
-9. **Reporting Service** - Report generation and management
-10. **Library Service** - Core business logic for book management
+4. **Admin Service** - Authentication and authorization management
+5. **Catalog Service** - MARC record and book catalog management
+6. **Patron Service** - Patron/User management
+7. **Circulation Service** - Book checkout/return management
+8. **Notification Service** - Email and notification management
+9. **Integration Service** - External system integrations
+10. **Reporting Service** - Report generation and management
+11. **Library Service** - Core business logic for book management
 
 ## Prerequisites
 
@@ -29,6 +30,7 @@ library-system/
 ├── discovery-server/          # Eureka Discovery Server (Port: 18761)
 ├── config-server/             # Spring Cloud Config Server (Port: 8888)
 ├── api-gateway/               # Spring Cloud Gateway (Port: 8080)
+├── admin-service/             # Admin Authentication Service (Port: 8088)
 ├── catalog-service/           # Catalog Management Service (Port: 8082)
 ├── patron-service/            # Patron Management Service (Port: 8083)
 ├── circulation-service/       # Circulation Management Service (Port: 8084)
@@ -85,6 +87,12 @@ cd config-server
 mvn spring-boot:run
 ```
 
+##### Admin Service
+```bash
+cd admin-service
+mvn spring-boot:run
+```
+
 ##### Catalog Service
 ```bash
 cd catalog-service
@@ -130,6 +138,7 @@ mvn spring-boot:run
 ### 3. Access the Application
 
 - **API Gateway**: http://localhost:8080
+- **Admin Panel**: http://localhost:8088/admin/login
 - **Eureka Dashboard**: http://localhost:18761
 - **Config Server**: http://localhost:8888
 - **Catalog Service**: http://localhost:8082
@@ -139,7 +148,64 @@ mvn spring-boot:run
 - **Integration Service**: http://localhost:8086
 - **Reporting Service**: http://localhost:8087
 
+## Admin Authentication
+
+The system includes a comprehensive admin authentication system with the following features:
+
+### Default Admin Accounts
+
+The system automatically creates two default admin accounts on first startup:
+
+1. **Super Administrator**
+   - Username: `superadmin`
+   - Password: `superadmin123`
+   - Role: SUPER_ADMIN
+   - Permissions: Full system access
+
+2. **Administrator**
+   - Username: `admin`
+   - Password: `admin123`
+   - Role: ADMIN
+   - Permissions: Standard admin access
+
+### Admin Roles
+
+- **SUPER_ADMIN**: Full system access, can manage other admins
+- **ADMIN**: Standard administrative access
+- **LIBRARIAN**: Library-specific operations
+- **ASSISTANT**: Basic operations and viewing
+
+### Authentication Features
+
+- JWT-based authentication
+- Role-based access control
+- Password encryption with BCrypt
+- Session management
+- Account status management (Active, Inactive, Suspended, Locked)
+
 ## API Endpoints
+
+### Admin Service (Port 8088)
+
+#### Authentication Endpoints
+- **Login**: `POST /admin/auth/login`
+- **Register**: `POST /admin/auth/register`
+- **Validate Token**: `POST /admin/auth/validate`
+- **Logout**: `POST /admin/auth/logout`
+
+#### Admin Management Endpoints
+- **Get all admins**: `GET /admin/api/admins`
+- **Get admin by ID**: `GET /admin/api/admins/{id}`
+- **Create admin**: `POST /admin/api/admins`
+- **Update admin**: `PUT /admin/api/admins/{id}`
+- **Delete admin**: `DELETE /admin/api/admins/{id}`
+- **Get admins by role**: `GET /admin/api/admins/role/{role}`
+- **Get admins by status**: `GET /admin/api/admins/status/{status}`
+- **Search admins**: `GET /admin/api/admins/search?query={query}`
+- **Update permissions**: `PUT /admin/api/admins/{id}/permissions`
+- **Change password**: `PUT /admin/api/admins/{id}/password`
+- **Lock admin**: `PUT /admin/api/admins/{id}/lock`
+- **Unlock admin**: `PUT /admin/api/admins/{id}/unlock`
 
 ### Catalog Service (Port 8082)
 
@@ -232,6 +298,12 @@ mvn spring-boot:run
 - Routes configured for all services
 - Service discovery enabled
 
+### Admin Service Configuration
+- Port: 8088
+- JWT secret: librarySystemJwtSecretKey2024
+- JWT expiration: 24 hours
+- Default admin accounts created on startup
+
 ### Database Configuration
 - PostgreSQL with connection pooling
 - JPA with Hibernate
@@ -243,6 +315,7 @@ mvn spring-boot:run
 - **Load Balancing**: Client-side load balancing with Ribbon
 - **Centralized Configuration**: Externalized configuration management
 - **API Gateway**: Single entry point with routing and filtering
+- **Authentication & Authorization**: JWT-based security with role-based access control
 - **Health Checks**: Actuator endpoints for monitoring
 - **Database**: PostgreSQL with connection pooling
 - **RESTful API**: Complete CRUD operations for all entities
@@ -290,6 +363,7 @@ Run the test script to verify all services are working:
 3. **Gateway routing issues**: Check service names and route configurations
 4. **Database issues**: Verify PostgreSQL connection and credentials
 5. **Docker issues**: Check Docker and Docker Compose installation
+6. **Authentication issues**: Verify JWT configuration and admin accounts
 
 ## Next Steps
 
@@ -301,3 +375,4 @@ Run the test script to verify all services are working:
 - Deploy to Kubernetes
 - Add CI/CD pipelines
 - Implement comprehensive testing
+

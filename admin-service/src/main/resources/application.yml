@@ -1,0 +1,59 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: admin-service
+  
+  datasource:
+    url: jdbc:postgresql://postgres:5432/librarydb
+    username: ${POSTGRES_USER:library}
+    password: ${POSTGRES_PASSWORD:library123}
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  
+  cloud:
+    config:
+      uri: http://config-server:8888
+      fail-fast: true
+  
+  security:
+    user:
+      name: admin
+      password: admin123
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:18761/eureka/
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+app:
+  jwt:
+    secret: librarySystemJwtSecretKey2024
+    expiration: 86400000 # 24 hours
+
+logging:
+  level:
+    com.example.library.admin: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n" 
