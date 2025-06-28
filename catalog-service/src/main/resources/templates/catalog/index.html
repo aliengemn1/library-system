@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Catalog - MARC21 Records</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/catalog">
+                <i class="fas fa-book"></i> Library Catalog Service
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/catalog/new">
+                    <i class="fas fa-plus"></i> Add New Record
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-list"></i> MARC21 Records</h2>
+                    <a href="/catalog/new" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Add New Record
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Leader</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>ISBN</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="record : ${records}">
+                                        <td th:text="${record.id}">1</td>
+                                        <td th:text="${record.leader}">00000cam</td>
+                                        <td th:text="${record.fields?.stream().filter(f -> f.tag == '245').findFirst().orElse(null)?.content}">Title</td>
+                                        <td th:text="${record.fields?.stream().filter(f -> f.tag == '100').findFirst().orElse(null)?.content}">Author</td>
+                                        <td th:text="${record.fields?.stream().filter(f -> f.tag == '020').findFirst().orElse(null)?.content}">ISBN</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <a th:href="@{/catalog/view/{id}(id=${record.id})}" class="btn btn-sm btn-info">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a th:href="@{/catalog/edit/{id}(id=${record.id})}" class="btn btn-sm btn-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a th:href="@{/catalog/delete/{id}(id=${record.id})}" 
+                                                   class="btn btn-sm btn-danger"
+                                                   onclick="return confirm('Are you sure you want to delete this record?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(records)}">
+                                        <td colspan="6" class="text-center text-muted">
+                                            <i class="fas fa-inbox fa-2x mb-2"></i>
+                                            <br>No MARC21 records found
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

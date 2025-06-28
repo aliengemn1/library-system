@@ -1,0 +1,110 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: optional:configserver:http://config-server:8888
+  cloud:
+    config:
+      uri: http://localhost:8888
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # Catalog Service Routes
+        - id: catalog-service
+          uri: lb://catalog-service
+          predicates:
+            - Path=/api/catalog/**
+          filters:
+            - StripPrefix=1
+        - id: catalog-service-web
+          uri: lb://catalog-service
+          predicates:
+            - Path=/catalog/**
+          filters:
+            - StripPrefix=0
+        
+        # Patron Service Routes
+        - id: patron-service
+          uri: lb://patron-service
+          predicates:
+            - Path=/api/patrons/**
+          filters:
+            - StripPrefix=1
+        - id: patron-service-web
+          uri: lb://patron-service
+          predicates:
+            - Path=/patrons/**
+          filters:
+            - StripPrefix=0
+        
+        # Circulation Service Routes
+        - id: circulation-service
+          uri: lb://circulation-service
+          predicates:
+            - Path=/api/circulation/**
+          filters:
+            - StripPrefix=1
+        - id: circulation-service-web
+          uri: lb://circulation-service
+          predicates:
+            - Path=/circulation/**
+          filters:
+            - StripPrefix=0
+        
+        # Notification Service Routes
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notifications/**
+          filters:
+            - StripPrefix=1
+        
+        # Integration Service Routes
+        - id: integration-service
+          uri: lb://integration-service
+          predicates:
+            - Path=/api/integration/**
+          filters:
+            - StripPrefix=1
+        
+        # Reporting Service Routes
+        - id: reporting-service
+          uri: lb://reporting-service
+          predicates:
+            - Path=/api/reports/**
+          filters:
+            - StripPrefix=1
+        - id: reporting-service-web
+          uri: lb://reporting-service
+          predicates:
+            - Path=/reports/**
+          filters:
+            - StripPrefix=0
+        
+        # Health Check Routes
+        - id: health-checks
+          uri: lb://catalog-service
+          predicates:
+            - Path=/api/health/**
+          filters:
+            - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always 

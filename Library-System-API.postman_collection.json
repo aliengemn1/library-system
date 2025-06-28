@@ -1,0 +1,1132 @@
+{
+	"info": {
+		"_postman_id": "library-system-api-collection",
+		"name": "Library System API Collection",
+		"description": "Complete API collection for the Library Management System microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "library-system"
+	},
+	"item": [
+		{
+			"name": "API Gateway",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8080",
+							"path": ["actuator", "health"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Catalog Service",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "Get All MARC Records",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/catalog/api/records",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["catalog", "api", "records"]
+						}
+					}
+				},
+				{
+					"name": "Get MARC Record by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/catalog/api/records/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["catalog", "api", "records", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create MARC Record",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"controlNumber\": \"123456789\",\n  \"leader\": \"00000cam a2200000 a 4500\",\n  \"status\": \"ACTIVE\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8082/catalog/api/records",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["catalog", "api", "records"]
+						}
+					}
+				},
+				{
+					"name": "Update MARC Record",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"controlNumber\": \"123456789\",\n  \"leader\": \"00000cam a2200000 a 4500\",\n  \"status\": \"ACTIVE\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8082/catalog/api/records/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["catalog", "api", "records", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete MARC Record",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/catalog/api/records/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["catalog", "api", "records", "1"]
+						}
+					}
+				},
+				{
+					"name": "Search MARC Records",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/catalog/api/search?query=test",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["catalog", "api", "search"],
+							"query": [
+								{
+									"key": "query",
+									"value": "test"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Upload MARC File",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8082/admin/upload-marc",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["admin", "upload-marc"]
+						}
+					}
+				},
+				{
+					"name": "Search Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/search?title=Great Gatsby",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8082",
+							"path": ["search"],
+							"query": [
+								{
+									"key": "title",
+									"value": "Great Gatsby"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Patron Service",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "Get All Patrons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/patrons/api/patrons",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["patrons", "api", "patrons"]
+						}
+					}
+				},
+				{
+					"name": "Get Patron by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/patrons/api/patrons/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["patrons", "api", "patrons", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Patron",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@email.com\",\n  \"phoneNumber\": \"1555010101\",\n  \"address\": \"123 Main St\",\n  \"city\": \"Anytown\",\n  \"state\": \"CA\",\n  \"zipCode\": \"12345\",\n  \"country\": \"USA\",\n  \"patronType\": \"STUDENT\",\n  \"status\": \"ACTIVE\",\n  \"maxBooksAllowed\": 5\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8083/patrons/api/patrons",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["patrons", "api", "patrons"]
+						}
+					}
+				},
+				{
+					"name": "Update Patron",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@email.com\",\n  \"phoneNumber\": \"1555010101\",\n  \"address\": \"123 Main St\",\n  \"city\": \"Anytown\",\n  \"state\": \"CA\",\n  \"zipCode\": \"12345\",\n  \"country\": \"USA\",\n  \"patronType\": \"STUDENT\",\n  \"status\": \"ACTIVE\",\n  \"maxBooksAllowed\": 5\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8083/patrons/api/patrons/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["patrons", "api", "patrons", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Patron",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/patrons/api/patrons/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["patrons", "api", "patrons", "1"]
+						}
+					}
+				},
+				{
+					"name": "Search Patrons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/patrons/api/search?query=john",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8083",
+							"path": ["patrons", "api", "search"],
+							"query": [
+								{
+									"key": "query",
+									"value": "john"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Circulation Service",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "Get All Circulation Records",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/circulation/api/records",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["circulation", "api", "records"]
+						}
+					}
+				},
+				{
+					"name": "Get Circulation Record by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/circulation/api/records/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["circulation", "api", "records", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Circulation Record",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bookId\": 1,\n  \"patronId\": 1,\n  \"checkoutDate\": \"2025-06-28T10:00:00\",\n  \"dueDate\": \"2025-07-28T10:00:00\",\n  \"status\": \"CHECKED_OUT\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8084/circulation/api/records",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["circulation", "api", "records"]
+						}
+					}
+				},
+				{
+					"name": "Update Circulation Record",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bookId\": 1,\n  \"patronId\": 1,\n  \"checkoutDate\": \"2025-06-28T10:00:00\",\n  \"dueDate\": \"2025-07-28T10:00:00\",\n  \"status\": \"RETURNED\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8084/circulation/api/records/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["circulation", "api", "records", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Circulation Record",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/circulation/api/records/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["circulation", "api", "records", "1"]
+						}
+					}
+				},
+				{
+					"name": "Checkout Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/circulation/api/checkout?bookId=1&patronId=1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["circulation", "api", "checkout"],
+							"query": [
+								{
+									"key": "bookId",
+									"value": "1"
+								},
+								{
+									"key": "patronId",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Return Book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/circulation/api/return/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["circulation", "api", "return", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Overdue Records",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8084/circulation/api/overdue",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8084",
+							"path": ["circulation", "api", "overdue"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Notification Service",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "Get All Notifications",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/notifications/api/notifications",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["notifications", "api", "notifications"]
+						}
+					}
+				},
+				{
+					"name": "Get Notification by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/notifications/api/notifications/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["notifications", "api", "notifications", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Notification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"EMAIL\",\n  \"recipient\": \"user@example.com\",\n  \"subject\": \"Book Due Reminder\",\n  \"message\": \"Your book is due tomorrow\",\n  \"status\": \"PENDING\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8085/notifications/api/notifications",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["notifications", "api", "notifications"]
+						}
+					}
+				},
+				{
+					"name": "Update Notification",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"EMAIL\",\n  \"recipient\": \"user@example.com\",\n  \"subject\": \"Book Due Reminder\",\n  \"message\": \"Your book is due tomorrow\",\n  \"status\": \"SENT\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8085/notifications/api/notifications/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["notifications", "api", "notifications", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Notification",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/notifications/api/notifications/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["notifications", "api", "notifications", "1"]
+						}
+					}
+				},
+				{
+					"name": "Send Notification",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/notifications/api/notifications/1/send",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["notifications", "api", "notifications", "1", "send"]
+						}
+					}
+				},
+				{
+					"name": "Get Notifications by Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/notifications/api/notifications/type/EMAIL",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["notifications", "api", "notifications", "type", "EMAIL"]
+						}
+					}
+				},
+				{
+					"name": "Get Notifications by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/notifications/api/notifications/status/PENDING",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8085",
+							"path": ["notifications", "api", "notifications", "status", "PENDING"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Integration Service",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8086/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "Get All Integration Configs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8086/integration/api/configs",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["integration", "api", "configs"]
+						}
+					}
+				},
+				{
+					"name": "Get Integration Config by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8086/integration/api/configs/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["integration", "api", "configs", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Integration Config",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"External Library API\",\n  \"type\": \"REST_API\",\n  \"url\": \"https://api.external-library.com\",\n  \"apiKey\": \"your-api-key\",\n  \"status\": \"ACTIVE\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8086/integration/api/configs",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["integration", "api", "configs"]
+						}
+					}
+				},
+				{
+					"name": "Update Integration Config",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"External Library API\",\n  \"type\": \"REST_API\",\n  \"url\": \"https://api.external-library.com\",\n  \"apiKey\": \"your-api-key\",\n  \"status\": \"ACTIVE\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8086/integration/api/configs/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["integration", "api", "configs", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Integration Config",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8086/integration/api/configs/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["integration", "api", "configs", "1"]
+						}
+					}
+				},
+				{
+					"name": "Test Connection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8086/integration/api/configs/1/test",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["integration", "api", "configs", "1", "test"]
+						}
+					}
+				},
+				{
+					"name": "Get Configs by Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8086/integration/api/configs/type/REST_API",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["integration", "api", "configs", "type", "REST_API"]
+						}
+					}
+				},
+				{
+					"name": "Get Configs by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8086/integration/api/configs/status/ACTIVE",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8086",
+							"path": ["integration", "api", "configs", "status", "ACTIVE"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Reporting Service",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "Get All Reports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports"]
+						}
+					}
+				},
+				{
+					"name": "Get Report by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports", "1"]
+						}
+					}
+				},
+				{
+					"name": "Create Report",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Monthly Circulation Report\",\n  \"type\": \"CIRCULATION\",\n  \"description\": \"Monthly report of book circulation\",\n  \"status\": \"PENDING\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports"]
+						}
+					}
+				},
+				{
+					"name": "Update Report",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Monthly Circulation Report\",\n  \"type\": \"CIRCULATION\",\n  \"description\": \"Monthly report of book circulation\",\n  \"status\": \"COMPLETED\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Report",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports/1",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports", "1"]
+						}
+					}
+				},
+				{
+					"name": "Generate Report",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports/1/generate",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports", "1", "generate"]
+						}
+					}
+				},
+				{
+					"name": "Get Reports by Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports/type/CIRCULATION",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports", "type", "CIRCULATION"]
+						}
+					}
+				},
+				{
+					"name": "Get Reports by Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports/status/PENDING",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports", "status", "PENDING"]
+						}
+					}
+				},
+				{
+					"name": "Get Scheduled Reports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8087/reports/api/reports/scheduled",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8087",
+							"path": ["reports", "api", "reports", "scheduled"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Discovery Server",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:18761/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "18761",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "Get Registered Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:18761/eureka/apps",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "18761",
+							"path": ["eureka", "apps"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Config Server",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/actuator/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8888",
+							"path": ["actuator", "health"]
+						}
+					}
+				},
+				{
+					"name": "Get Configuration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/catalog-service/default",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "8888",
+							"path": ["catalog-service", "default"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Infrastructure Services",
+			"item": [
+				{
+					"name": "Elasticsearch Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/_cluster/health",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "9200",
+							"path": ["_cluster", "health"]
+						}
+					}
+				},
+				{
+					"name": "Kibana Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5601/api/status",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "5601",
+							"path": ["api", "status"]
+						}
+					}
+				},
+				{
+					"name": "Kafka Topics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9092",
+							"protocol": "http",
+							"host": ["localhost"],
+							"port": "9092"
+						}
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost",
+			"type": "string"
+		},
+		{
+			"key": "api_gateway_port",
+			"value": "8080",
+			"type": "string"
+		},
+		{
+			"key": "catalog_service_port",
+			"value": "8082",
+			"type": "string"
+		},
+		{
+			"key": "patron_service_port",
+			"value": "8083",
+			"type": "string"
+		},
+		{
+			"key": "circulation_service_port",
+			"value": "8084",
+			"type": "string"
+		},
+		{
+			"key": "notification_service_port",
+			"value": "8085",
+			"type": "string"
+		},
+		{
+			"key": "integration_service_port",
+			"value": "8086",
+			"type": "string"
+		},
+		{
+			"key": "reporting_service_port",
+			"value": "8087",
+			"type": "string"
+		},
+		{
+			"key": "discovery_server_port",
+			"value": "18761",
+			"type": "string"
+		},
+		{
+			"key": "config_server_port",
+			"value": "8888",
+			"type": "string"
+		}
+	]
+} 
