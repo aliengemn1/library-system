@@ -7,58 +7,121 @@ This project implements a library management system using Spring Cloud microserv
 1. **Discovery Server (Eureka)** - Service registry and discovery
 2. **Configuration Server** - Centralized configuration management
 3. **API Gateway** - Single entry point for all client requests
-4. **Library Service** - Core business logic for book management
+4. **Catalog Service** - MARC record and book catalog management
+5. **Patron Service** - Patron/User management
+6. **Circulation Service** - Book checkout/return management
+7. **Notification Service** - Email and notification management
+8. **Integration Service** - External system integrations
+9. **Reporting Service** - Report generation and management
+10. **Library Service** - Core business logic for book management
 
 ## Prerequisites
 
 - Java 17 or higher
 - Maven 3.6 or higher
+- Docker and Docker Compose
 - Git (for configuration server)
 
 ## Project Structure
 
 ```
 library-system/
-├── discovery-server/          # Eureka Discovery Server (Port: 8761)
+├── discovery-server/          # Eureka Discovery Server (Port: 18761)
 ├── config-server/             # Spring Cloud Config Server (Port: 8888)
 ├── api-gateway/               # Spring Cloud Gateway (Port: 8080)
+├── catalog-service/           # Catalog Management Service (Port: 8082)
+├── patron-service/            # Patron Management Service (Port: 8083)
+├── circulation-service/       # Circulation Management Service (Port: 8084)
+├── notification-service/      # Notification Service (Port: 8085)
+├── integration-service/       # Integration Service (Port: 8086)
+├── reporting-service/         # Reporting Service (Port: 8087)
 ├── library-service/           # Library Management Service (Port: 8081)
+├── docker-compose.yml         # Docker Compose configuration
 └── pom.xml                    # Parent POM
 ```
 
 ## Getting Started
 
-### 1. Build the Project
+### 1. Using Docker Compose (Recommended)
+
+The easiest way to run the entire system is using Docker Compose:
+
+```bash
+# Start all services
+docker-compose up -d
+
+# Check service status
+docker-compose ps
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+```
+
+### 2. Manual Build and Run
+
+#### Build the Project
 
 ```bash
 mvn clean install
 ```
 
-### 2. Start the Services
+#### Start the Services
 
 Start the services in the following order:
 
-#### Discovery Server
+##### Discovery Server
 ```bash
 cd discovery-server
 mvn spring-boot:run
 ```
-Access Eureka Dashboard: http://localhost:8761
+Access Eureka Dashboard: http://localhost:18761
 
-#### Configuration Server
+##### Configuration Server
 ```bash
 cd config-server
 mvn spring-boot:run
 ```
-**Note**: Update the Git repository URI in `config-server/src/main/resources/application.yml` to point to your configuration repository.
 
-#### Library Service
+##### Catalog Service
 ```bash
-cd library-service
+cd catalog-service
 mvn spring-boot:run
 ```
 
-#### API Gateway
+##### Patron Service
+```bash
+cd patron-service
+mvn spring-boot:run
+```
+
+##### Circulation Service
+```bash
+cd circulation-service
+mvn spring-boot:run
+```
+
+##### Notification Service
+```bash
+cd notification-service
+mvn spring-boot:run
+```
+
+##### Integration Service
+```bash
+cd integration-service
+mvn spring-boot:run
+```
+
+##### Reporting Service
+```bash
+cd reporting-service
+mvn spring-boot:run
+```
+
+##### API Gateway
 ```bash
 cd api-gateway
 mvn spring-boot:run
@@ -67,60 +130,95 @@ mvn spring-boot:run
 ### 3. Access the Application
 
 - **API Gateway**: http://localhost:8080
-- **Eureka Dashboard**: http://localhost:8761
-- **H2 Database Console**: http://localhost:8081/h2-console
-  - JDBC URL: `jdbc:h2:mem:librarydb`
-  - Username: `sa`
-  - Password: `password`
+- **Eureka Dashboard**: http://localhost:18761
+- **Config Server**: http://localhost:8888
+- **Catalog Service**: http://localhost:8082
+- **Patron Service**: http://localhost:8083
+- **Circulation Service**: http://localhost:8084
+- **Notification Service**: http://localhost:8085
+- **Integration Service**: http://localhost:8086
+- **Reporting Service**: http://localhost:8087
 
 ## API Endpoints
 
-All requests should go through the API Gateway at `http://localhost:8080`
+### Catalog Service (Port 8082)
 
-### Book Management
+- **Get all MARC records**: `GET /catalog/api/records`
+- **Get MARC record by ID**: `GET /catalog/api/records/{id}`
+- **Create MARC record**: `POST /catalog/api/records`
+- **Update MARC record**: `PUT /catalog/api/records/{id}`
+- **Delete MARC record**: `DELETE /catalog/api/records/{id}`
+- **Search MARC records**: `GET /catalog/api/search?query={query}`
+- **Upload MARC file**: `POST /admin/upload-marc`
+- **Search books**: `GET /search?title={title}&author={author}&isbn={isbn}`
 
-- **Get all books**: `GET /api/books`
-- **Get book by ID**: `GET /api/books/{id}`
-- **Get book by ISBN**: `GET /api/books/isbn/{isbn}`
-- **Get books by author**: `GET /api/books/author/{author}`
-- **Get books by title**: `GET /api/books/title/{title}`
-- **Get available books**: `GET /api/books/available`
-- **Get books by year**: `GET /api/books/year/{year}`
-- **Create book**: `POST /api/books`
-- **Update book**: `PUT /api/books/{id}`
-- **Delete book**: `DELETE /api/books/{id}`
-- **Borrow book**: `POST /api/books/{id}/borrow`
-- **Return book**: `POST /api/books/{id}/return`
+### Patron Service (Port 8083)
 
-### Example API Usage
+- **Get all patrons**: `GET /patrons/api/patrons`
+- **Get patron by ID**: `GET /patrons/api/patrons/{id}`
+- **Create patron**: `POST /patrons/api/patrons`
+- **Update patron**: `PUT /patrons/api/patrons/{id}`
+- **Delete patron**: `DELETE /patrons/api/patrons/{id}`
+- **Search patrons**: `GET /patrons/api/search?query={query}`
 
-#### Create a new book
-```bash
-curl -X POST http://localhost:8080/api/books \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "The Catcher in the Rye",
-    "author": "J.D. Salinger",
-    "isbn": "978-0316769488",
-    "description": "A classic novel about teenage alienation",
-    "publicationYear": 1951
-  }'
-```
+### Circulation Service (Port 8084)
 
-#### Get all books
-```bash
-curl http://localhost:8080/api/books
-```
+- **Get all circulation records**: `GET /circulation/api/records`
+- **Get circulation record by ID**: `GET /circulation/api/records/{id}`
+- **Create circulation record**: `POST /circulation/api/records`
+- **Update circulation record**: `PUT /circulation/api/records/{id}`
+- **Delete circulation record**: `DELETE /circulation/api/records/{id}`
+- **Checkout book**: `GET /circulation/api/checkout?bookId={bookId}&patronId={patronId}`
+- **Return book**: `POST /circulation/api/return/{id}`
+- **Get overdue records**: `GET /circulation/api/overdue`
 
-#### Borrow a book
-```bash
-curl -X POST http://localhost:8080/api/books/1/borrow
-```
+### Notification Service (Port 8085)
+
+- **Get all notifications**: `GET /notifications/api/notifications`
+- **Get notification by ID**: `GET /notifications/api/notifications/{id}`
+- **Create notification**: `POST /notifications/api/notifications`
+- **Update notification**: `PUT /notifications/api/notifications/{id}`
+- **Delete notification**: `DELETE /notifications/api/notifications/{id}`
+- **Send notification**: `POST /notifications/api/notifications/{id}/send`
+- **Get notifications by type**: `GET /notifications/api/notifications/type/{type}`
+- **Get notifications by status**: `GET /notifications/api/notifications/status/{status}`
+
+### Integration Service (Port 8086)
+
+- **Get all integration configs**: `GET /integration/api/configs`
+- **Get integration config by ID**: `GET /integration/api/configs/{id}`
+- **Create integration config**: `POST /integration/api/configs`
+- **Update integration config**: `PUT /integration/api/configs/{id}`
+- **Delete integration config**: `DELETE /integration/api/configs/{id}`
+- **Test connection**: `POST /integration/api/configs/{id}/test`
+- **Get configs by type**: `GET /integration/api/configs/type/{type}`
+- **Get configs by status**: `GET /integration/api/configs/status/{status}`
+
+### Reporting Service (Port 8087)
+
+- **Get all reports**: `GET /reports/api/reports`
+- **Get report by ID**: `GET /reports/api/reports/{id}`
+- **Create report**: `POST /reports/api/reports`
+- **Update report**: `PUT /reports/api/reports/{id}`
+- **Delete report**: `DELETE /reports/api/reports/{id}`
+- **Generate report**: `POST /reports/api/reports/{id}/generate`
+- **Get reports by type**: `GET /reports/api/reports/type/{type}`
+- **Get reports by status**: `GET /reports/api/reports/status/{status}`
+- **Get scheduled reports**: `GET /reports/api/reports/scheduled`
+
+## Infrastructure Services
+
+- **PostgreSQL Database**: Port 5432
+- **Kafka**: Port 9092
+- **Zookeeper**: Port 2181
+- **Elasticsearch**: Port 9200
+- **Kibana**: Port 5601
+- **Logstash**: Port 5001
 
 ## Configuration
 
 ### Discovery Server Configuration
-- Port: 8761
+- Port: 18761
 - Self-preservation mode: Disabled for development
 - Wait time: 0ms for faster startup
 
@@ -131,12 +229,11 @@ curl -X POST http://localhost:8080/api/books/1/borrow
 
 ### API Gateway Configuration
 - Port: 8080
-- Routes configured for `/api/books/**` and `/api/health/**`
+- Routes configured for all services
 - Service discovery enabled
 
-### Library Service Configuration
-- Port: 8081
-- H2 in-memory database
+### Database Configuration
+- PostgreSQL with connection pooling
 - JPA with Hibernate
 - Sample data loaded on startup
 
@@ -147,15 +244,19 @@ curl -X POST http://localhost:8080/api/books/1/borrow
 - **Centralized Configuration**: Externalized configuration management
 - **API Gateway**: Single entry point with routing and filtering
 - **Health Checks**: Actuator endpoints for monitoring
-- **Database**: H2 in-memory database with sample data
-- **RESTful API**: Complete CRUD operations for books
+- **Database**: PostgreSQL with connection pooling
+- **RESTful API**: Complete CRUD operations for all entities
 - **Validation**: Input validation using Bean Validation
+- **Logging**: Structured logging with Logback
+- **Monitoring**: ELK stack integration
+- **Message Queue**: Kafka integration for async processing
 
 ## Monitoring
 
 - **Eureka Dashboard**: View registered services
 - **Actuator Endpoints**: Health checks and metrics
-- **H2 Console**: Database inspection
+- **Kibana**: Log visualization and analysis
+- **Elasticsearch**: Log storage and search
 
 ## Development
 
@@ -165,6 +266,7 @@ curl -X POST http://localhost:8080/api/books/1/borrow
 2. Add the module to the parent `pom.xml`
 3. Include Eureka Client dependency
 4. Configure the service in the API Gateway routes
+5. Add Docker configuration
 
 ### Configuration Management
 
@@ -173,19 +275,29 @@ curl -X POST http://localhost:8080/api/books/1/borrow
 3. Place configuration files in the repository
 4. Services will automatically fetch configurations
 
+## Testing
+
+Run the test script to verify all services are working:
+
+```bash
+./run-tests.sh
+```
+
 ## Troubleshooting
 
 1. **Service not registering**: Check Eureka server is running and accessible
 2. **Configuration not loading**: Verify Git repository URI and connectivity
 3. **Gateway routing issues**: Check service names and route configurations
-4. **Database issues**: Verify H2 console access and connection settings
+4. **Database issues**: Verify PostgreSQL connection and credentials
+5. **Docker issues**: Check Docker and Docker Compose installation
 
 ## Next Steps
 
 - Add authentication and authorization
-- Implement circuit breakers with Hystrix
-- Add distributed tracing with Sleuth
+- Implement circuit breakers with Resilience4j
+- Add distributed tracing with Sleuth and Zipkin
 - Implement logging aggregation
 - Add monitoring with Prometheus and Grafana
-- Containerize with Docker
-- Deploy to Kubernetes 
+- Deploy to Kubernetes
+- Add CI/CD pipelines
+- Implement comprehensive testing
