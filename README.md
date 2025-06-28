@@ -372,7 +372,20 @@ Run the test script to verify all services are working:
 - Add distributed tracing with Sleuth and Zipkin
 - Implement logging aggregation
 - Add monitoring with Prometheus and Grafana
-- Deploy to Kubernetes
 - Add CI/CD pipelines
 - Implement comprehensive testing
+
+## Admin Panel Login
+
+You can access the admin panel at [http://localhost:8088/admin/login](http://localhost:8088/admin/login)
+
+**Default Admin Accounts:**
+
+- Username: `superadmin`  Password: `superadmin123` (Super Admin)
+- Username: `admin`       Password: `admin123` (Admin)
+
+## Demo Videos
+
+- **Part 1 - Infrastructure Setup**: [https://www.youtube.com/watch?v=Gqf7qObCQO0](https://www.youtube.com/watch?v=Gqf7qObCQO0)
+- **Part 2 - Applications**: [https://www.youtube.com/watch?v=EsyfQkC1OQ0](https://www.youtube.com/watch?v=EsyfQkC1OQ0)
 

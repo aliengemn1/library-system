@@ -4,15 +4,13 @@ server:
 spring:
   application:
     name: config-server
+  profiles:
+    active: native
   cloud:
     config:
       server:
-        git:
-          uri: https://github.com/aliengemn1/library-system.git
-          default-label: main
-          search-paths: config
-          clone-on-start: true
-          timeout: 10
+        native:
+          search-locations: classpath:/config
 
 eureka:
   client:

@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: admin-service
+  config:
+    import: "configserver:"
   
   datasource:
     url: jdbc:postgresql://postgres:5432/librarydb
